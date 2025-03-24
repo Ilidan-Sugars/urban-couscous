@@ -86,29 +86,6 @@ onMounted(async () => {
     }
 })
 
-/*axios.get('https://jsonplaceholder.typicode.com/posts')
-    .then((response) => {
-        posts.value = response.data
-    }).catch((error) => {
-        console.log(error)
-    })
-
-axios.get('https://jsonplaceholder.typicode.com/users')
-    .then((response) => {
-        users.value = response.data
-
-        for (const user of users.value) {
-            if (user.name.length > longestName.value.length) {
-                longestName.value = user.name
-                console.log(longestName.value);
-            }
-        }
-        console.log(response.data)
-    }).catch((error) => {
-        console.log(error)
-    })
-*/
-
 const onBackClick = () => {
     router.push('/')
 }
