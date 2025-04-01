@@ -8,10 +8,18 @@
                     <div class="col-6 ">
                         <div class="row">
                             <div class="col-12 p-2">
-                                <NCard title="Количество постов">{{ posts.length }}</NCard>
+
+                                <NCard title="Количество постов">
+                                    <NSkeleton v-if="loading" round size="medium" :width="100"></NSkeleton>
+                                    <span v-else round>{{ posts.length }}</span>
+                                </NCard>
                             </div>
                             <div class="col-12 p-2">
-                                <NCard title="Самое длинное имя">{{ longestName }}</NCard>
+                                <NCard title="Самое длинное имя">
+
+                                    <NSkeleton v-if="loading" round size="medium" :width="100"></NSkeleton>
+                                    <span v-else round>{{ longestName }}</span>
+                                </NCard>
                             </div>
                         </div>
                     </div>
@@ -23,7 +31,17 @@
                                     <th>Num posts</th>
                                 </tr>
                             </thead>
-                            <tbody v-for="user in users" :key="user.id">
+                            <tbody v-if="loading">
+                                <tr>
+                                    <td>
+                                        <n-skeleton round text :repeat="9" size="medium" />
+                                    </td>
+                                    <td>
+                                        <n-skeleton round text :repeat="9" size="medium" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody v-else round v-for="user in users" :key="user.id">
                                 <tr>
                                     <td>{{ user.name }}</td>
                                     <td>{{
@@ -44,12 +62,12 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { NButton, NCard, NSpace, NTable, NConfigProvider } from 'naive-ui'
+import { NButton, NCard, NSpace, NTable, NConfigProvider, NSkeleton } from 'naive-ui'
 import { storeToRefs } from 'pinia'
 import { useThemeStore } from '../stores/theme'
+
 import postsRepository from '~/repositories/posts.js'
 import usersRepository from '~/repositories/users.js'
-
 
 
 const router = useRouter()
@@ -58,6 +76,10 @@ const users = ref([])
 const longestName = ref('')
 const themeStore = useThemeStore()
 const { theme } = storeToRefs(themeStore)
+const loading = ref(true)
+
+
+
 
 onMounted(async () => {
     try {
@@ -80,6 +102,10 @@ onMounted(async () => {
                 console.log(longestName.value);
             }
         }
+        loading.value = false
+        window.$message.success(
+            'Cause you walked hand in hand With another man in my place'
+        )
     }
     catch (error) {
         console.log(error)

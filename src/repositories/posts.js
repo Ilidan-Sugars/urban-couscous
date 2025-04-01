@@ -9,5 +9,5 @@ export default {
     get: (id) => {
         const axios = useAxios()
         return axios.get('/posts', { params: { userId: id } })
-    },
+    }
 }

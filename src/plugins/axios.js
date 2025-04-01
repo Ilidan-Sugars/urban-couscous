@@ -1,18 +1,18 @@
-import axios from "axios"
-import { useMessage } from "naive-ui"
+import axios from 'axios'
+import { useMessage } from 'naive-ui'
 
 export default {
-    instal: (app, options) => {
-        const message = useMessage()
+    install: (app, options) => {
+        const messgae = useMessage()
         app.config.globalProperties.$axios = axios.create({
             baseURL: options.baseUrl,
         })
 
         app.config.globalProperties.$axios.interceptors.response.use((res) => {
             console.log(res)
-            return res
+            return res;
         }, async (err) => {
-            message.error('Ошибка - ')
+            messgae.error('Ошибка!')
             console.log(err)
         })
     }
